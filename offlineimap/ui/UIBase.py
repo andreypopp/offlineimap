@@ -42,6 +42,8 @@ def getglobalui():
 class UIBase:
     def __init__(s, config, verbose = 0):
         s.verbose = verbose
+        # Is this a 'dryrun'?
+        s.dryrun = config.getboolean('general', 'dry-run')
         s.config = config
         s.debuglist = []
         s.debugmessages = {}
