@@ -251,6 +251,16 @@ class UIBase:
                    (s.getnicename(srcrepos), s.getnicename(destrepos)))
 
     ############################## Folder syncing
+    def makefolder(self, folder):
+        """Called when a folder is created"""
+        if self.dryrun:
+            s._msg("DRYRUN: Would have created folder %s[%s]" %
+                   (folder, folder.self.repository))
+        else:
+            s._msg("Creating folder %s[%s]" %
+                   (folder, folder.self.repository))
+
+
     def syncingfolder(s, srcrepos, srcfolder, destrepos, destfolder):
         """Called when a folder sync operation is started."""
         if s.verbose >= 0:

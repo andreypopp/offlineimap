@@ -333,6 +333,9 @@ class IMAPRepository(BaseRepository):
         #    newname = self.getreference() + self.getsep() + foldername
         #else:
         #    newname = foldername
+        self.ui.makefolder(self)
+        if self.dryrun:
+            return
         newname = foldername
         imapobj = self.imapserver.acquireconnection()
         try:

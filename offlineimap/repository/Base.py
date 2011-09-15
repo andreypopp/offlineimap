@@ -102,6 +102,7 @@ class BaseRepository(object, CustomConfig.ConfigHelperMixin):
         raise NotImplementedError
 
     def makefolder(self, foldername):
+        """Create a new folder"""
         raise NotImplementedError
 
     def deletefolder(self, foldername):
