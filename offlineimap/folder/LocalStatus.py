@@ -123,6 +123,9 @@ class LocalStatusFolder(BaseFolder):
             # We cannot assign a uid.
             return uid
 
+        if self.account.dryrun:
+            return # don't save in dry-run mode
+
         if uid in self.messagelist:     # already have it
             self.savemessageflags(uid, flags)
             return uid
@@ -138,6 +141,9 @@ class LocalStatusFolder(BaseFolder):
         return self.messagelist[uid]['time']
 
     def savemessageflags(self, uid, flags):
+        if self.account.dryrun:
+            return # don't save in dry-run mode
+
         self.messagelist[uid]['flags'] = flags
         self.save()
 

@@ -488,7 +488,9 @@ class IMAPFolder(BaseFolder):
                   message is saved, but it's UID can not be found, it will
                   return 0. If the message can't be written (folder is
                   read-only for example) it will return -1."""
-        self.ui.debug('imap', 'savemessage: called')
+        self.ui.savemessage('imap', uid, flags, self)
+        if self.account.dryrun:
+            return 0# don't save in dry-run mode
 
         # already have it, just save modified flags
         if uid > 0 and self.uidexists(uid):
@@ -602,6 +604,9 @@ class IMAPFolder(BaseFolder):
 
 
     def savemessageflags(self, uid, flags):
+        if self.account.dryrun:
+            return # don't save in dry-run mode
+
         imapobj = self.imapserver.acquireconnection()
         try:
             try:

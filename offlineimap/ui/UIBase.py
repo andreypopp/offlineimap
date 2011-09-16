@@ -327,6 +327,15 @@ class UIBase:
             s._msg("Deleting flag %s from %d messages on %s" % \
                    (", ".join(flags), len(uidlist), dest))
 
+    def savemessage(self, debugtype, uid, flags, folder):
+        """Output a debug or dryrun log line stating save a msg"""
+        if self.dryrun:
+            self._msg("DRYRUN: [%s] Write mail '%s:%d' with flags %s" %
+                      (debugtype, folder, uid, repr(flags)))
+        else:
+            self.debug(debugtype, "Write mail '%s:%d' with flags %s" %
+                      (folder, uid, repr(flags)))
+
     ################################################## Threads
 
     def getThreadDebugLog(s, thread):

@@ -220,6 +220,9 @@ class LocalStatusSQLiteFolder(LocalStatusFolder):
             # We cannot assign a uid.
             return uid
 
+        if self.account.dryrun:
+            return # don't save in dry-run mode
+
         if self.uidexists(uid):     # already have it
             self.savemessageflags(uid, flags)
             return uid
@@ -231,6 +234,9 @@ class LocalStatusSQLiteFolder(LocalStatusFolder):
         return uid
 
     def savemessageflags(self, uid, flags):
+        if self.account.dryrun:
+            return # don't save in dry-run mode
+
         self.messagelist[uid] = {'uid': uid, 'flags': flags}
         flags = ''.join(sorted(flags))
         self.sql_write('UPDATE status SET flags=? WHERE id=?',(flags,uid))

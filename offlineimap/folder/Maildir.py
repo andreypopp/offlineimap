@@ -222,11 +222,14 @@ class MaildirFolder(BaseFolder):
     def savemessage(self, uid, content, flags, rtime):
         # This function only ever saves to tmp/,
         # but it calls savemessageflags() to actually save to cur/ or new/.
-        self.ui.debug('maildir', 'savemessage: called to write with flags %s '
-                      'and content %s' % (repr(flags), repr(content)))
+        self.ui.savemessage('maildir', uid, flags, self)
+        if self.account.dryrun:
+            return 0 # don't save in dry-run mode
+
         if uid < 0:
             # We cannot assign a new uid.
             return uid
+
         if uid in self.messagelist:
             # We already have it, just update flags.
             self.savemessageflags(uid, flags)
@@ -278,6 +281,9 @@ class MaildirFolder(BaseFolder):
         return self.messagelist[uid]['flags']
 
     def savemessageflags(self, uid, flags):
+        if self.account.dryrun:
+            return # don't save in dry-run mode
+
         oldfilename = self.messagelist[uid]['filename']
         dir_prefix, newname = os.path.split(oldfilename)
         tmpdir = os.path.join(self.getfullname(), 'tmp')

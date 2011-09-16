@@ -186,6 +186,10 @@ class MappedIMAPFolder(IMAPFolder):
         if uid < 0:
             return uid
 
+        self.ui.savemessage('imap', uid, flags, self)
+        if self.account.dryrun:
+            return 0# don't save in dry-run mode
+
         #if msg uid already exists, just modify the flags
         if uid in self.r2l:
             self.savemessageflags(uid, flags)
