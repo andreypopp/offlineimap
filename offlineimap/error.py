@@ -1,7 +1,7 @@
 class OfflineImapError(Exception):
     """An Error during offlineimap synchronization"""
 
-    class ERROR:
+    class ERROR(object):
         """Severity level of an Exception
 
         * **MESSAGE**:  Abort the current message, but continue with folder

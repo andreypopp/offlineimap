@@ -21,7 +21,7 @@ import traceback
 logfile = open("/tmp/logfile", "wt")
 loglock = Lock()
 
-class DebuggingLock:
+class DebuggingLock(object):
     def __init__(self, name):
         self.lock = Lock()
         self.name = name

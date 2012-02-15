@@ -28,7 +28,7 @@ from offlineimap.ui.UIBase import UIBase
 from offlineimap.threadutil import ExitNotifyThread
 import offlineimap
 
-class CursesUtil:
+class CursesUtil(object):
 
     def __init__(self, *args, **kwargs):
         # iolock protects access to the
@@ -101,7 +101,7 @@ class CursesUtil:
         return hasattr(self, 'stdscr')
 
 
-class CursesAccountFrame:
+class CursesAccountFrame(object):
     """Notable instance variables:
 
     - account: corresponding Account()
@@ -174,7 +174,7 @@ class CursesAccountFrame:
             self.account.config.set('Account %s' % self.account.name,
                                         'skipsleep', '1')
 
-class CursesThreadFrame:
+class CursesThreadFrame(object):
     """
      curses_color: current color pair for logging"""
     def __init__(self, ui, acc_win, x, y):

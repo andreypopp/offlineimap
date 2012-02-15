@@ -77,7 +77,7 @@ def CustomConfigDefault():
     derived classes."""
     pass
 
-class ConfigHelperMixin:
+class ConfigHelperMixin(object):
     """Allow comfortable retrieving of config values pertaining to a section.
 
     If a class inherits from this cls:`ConfigHelperMixin`, it needs

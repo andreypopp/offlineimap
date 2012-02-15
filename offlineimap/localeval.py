@@ -23,7 +23,7 @@ try:
 except:
     pass
 
-class LocalEval:
+class LocalEval(object):
     def __init__(self, path=None):
         self.namespace={}
 

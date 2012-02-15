@@ -42,7 +42,7 @@ try:
 except ImportError:
     pass
 
-class IMAPServer:
+class IMAPServer(object):
     """Initializes all variables from an IMAPRepository() instance
 
     Various functions, such as acquireconnection() return an IMAP4
