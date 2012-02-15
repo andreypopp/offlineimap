@@ -56,9 +56,12 @@ setup(name = "offlineimap",
       url = offlineimap.__homepage__,
       packages = ['offlineimap', 'offlineimap.folder',
                   'offlineimap.repository', 'offlineimap.ui'],
-      scripts = ['bin/offlineimap'],
       license = offlineimap.__copyright__ + \
                 ", Licensed under the GPL version 2",
-      cmdclass = { 'test': TestCommand}
+      cmdclass = { 'test': TestCommand},
+      entry_points="""
+      [console_scripts]
+      offlineimap = offlineimap.init:main
+      """
 )
 

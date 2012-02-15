@@ -260,7 +260,7 @@ class OfflineImap:
 
         if options.logfile:
             sys.stderr = self.ui.logfile
-    
+
         socktimeout = config.getdefaultint("general", "socktimeout", 0)
         if socktimeout > 0:
             socket.setdefaulttimeout(socktimeout)
@@ -375,3 +375,7 @@ class OfflineImap:
         for account in allaccounts:
             if account.name not in activeaccounts: continue
             account.serverdiagnostics()
+
+def main():
+    oi = OfflineImap()
+    oi.run()
