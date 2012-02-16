@@ -18,12 +18,15 @@
 import os
 import sys
 import threading
-import offlineimap.imaplib2 as imaplib
 import signal
 import socket
 import logging
 from optparse import OptionParser
+from pkg_resources import iter_entry_points
+
 import offlineimap
+import offlineimap.imaplib2 as imaplib
+
 from offlineimap import accounts, threadutil, syncmaster
 from offlineimap.error import OfflineImapError
 from offlineimap.ui import UI_LIST, setglobalui, getglobalui
@@ -38,6 +41,12 @@ class OfflineImap(object):
       oi = OfflineImap()
       oi.run()
     """
+
+    PLUGIN_ENRTY_POINT_NAME = "offlineimap"
+
+    def __init__(self):
+        self.plugins = []
+
     def run(self):
         """Parse the commandline and invoke everything"""
         # next line also sets self.config and self.ui
@@ -46,6 +55,18 @@ class OfflineImap(object):
             self.serverdiagnostics(options)
         else:
             self.sync(options)
+
+    def load_plugins(self, enabled):
+        """Load plugins for offlineimap by iterating over entry points"""
+        for p in iter_entry_points(self.PLUGIN_ENRTY_POINT_NAME):
+            try:
+                plugin_cls = p.load()
+                plugin_cfg = self.config.section("plugin:%s" % p.name, {})
+                plugin = plugin_cls(plugin_cfg)
+            except Exception, e:
+                pass # TODO: log error here
+            else:
+                self.plugins.append(plugin)
 
     def parse_cmd_options(self):
         parser = OptionParser(version=offlineimap.__version__,
